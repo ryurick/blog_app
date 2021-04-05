@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div>
+        <h2 class="card-header bg-dark text-white">{{ post.title }}</h2>
+        <div class="card-body">
+            <p>{{ post.created_at }}/{{ post.category }}</p>
+            <!-- djangoで複数行を正しく表示させる：linebreakesbr 、textでurlのようなものがあった場合アンカータグにする：urlize -->
+            {{ post.text | linebreaksbr | urlize}}
+        </div>
+    </div>
+<!-- 記事に紐づいたすべてのコメントを取得：post.comment_set.all -->
+    {% for comment in post.comment_set.all %}
+        <p>{{ comment.name }}
+            <br>{{ comment.text | linebreaksbr }}</p>
+
+    {% endfor %}
+
+    <a class="btn btn-dark" href="{% url 'blog:comment' post.pk %}">コメント投稿ページへ</a>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+    <form action="" method="POST">
+        <!-- 複数の入力欄で関連するようなエラー(pwを２回入力させてそのpwが合致しません等)を表示する -->
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div class="form-group">
+                <!-- model・formsを経由してfield(name,text)のidを取得している -->
+                <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        {% csrf_token %}
+        <button type="submit" class="btn btn-dark">送信</button>
+    </form>
+
+{% endblock %}
